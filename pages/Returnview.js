@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react'  
 import Table from '@material-ui/core/Table';  
 import TableBody from '@material-ui/core/TableBody';  
@@ -9,14 +8,69 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';  
 import axios from 'axios';  
 import { Link } from "react-router-dom"; 
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
-import { IconButton } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import Button from '@material-ui/core/Button';
-import Form from 'react-bootstrap/Form';
 
+
+
+const styles = {
+  viewbtn:{
+  backgroundColor: '#33b5e5',
+  width: '200px',
+  textDecoration: 'none',
+  height: '100px',
+  marginRight: '5px',
+  fontSize: '17px',
+  paddingLeft: '15px',
+  paddingRight: '15px',
+  paddingTop: '5px',
+  paddingBottom: '5px',
+  color: 'white',
+  borderRadius: '7px',
+},
+updatebtn:{
+  backgroundColor: '#8738a1',
+  width: '200px',
+  textDecoration: 'none',
+  height: '100px',
+  marginRight: '5px',
+  fontSize: '17px',
+  paddingLeft: '15px',
+  paddingRight: '15px',
+  paddingTop: '5px',
+  paddingBottom: '5px',
+  color: 'white',
+  borderRadius: '7px',
+},
+deletebtn:{
+  backgroundColor: '#CC0000',
+  width: '200px',
+  textDecoration: 'none',
+  height: '100px',
+  marginRight: '5px',
+  fontSize: '17px',
+  paddingLeft: '15px',
+  paddingRight: '15px',
+  paddingTop: '5px',
+  paddingBottom: '5px',
+  color: 'white',
+  borderRadius: '7px',
+},
+Addbtn:{
+  backgroundColor: '#CC0000',
+  width: '200px',
+  textDecoration: 'none',
+  height: '100px',
+  marginRight: '5px',
+  fontSize: '17px',
+  paddingLeft: '15px',
+  paddingRight: '15px',
+  paddingTop: '5px',
+  paddingBottom: '5px',
+  color: 'white',
+  borderRadius: '7px',
+}
+}
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -37,18 +91,26 @@ const StyledTableRow = withStyles((theme) => ({
 }))(TableRow);
 
 
+const dateOnly = (d) => {
+  const date = new Date(d);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  return `${year} - ${month} - ${day}`;
+};
+
 export class Returnview extends Component {  
   constructor(props) {  
 
     super(props)  
     this.state = {  
-    ProductData: [] 
+    ProductData: [], 
     
     }  
   }  
 
-  componentDidMount() {  
-    axios.get('http://localhost:3003/get').then(response => {  
+componentDidMount() {  
+    axios.get('http://localhost:3001/returnItem').then(response => {  
       console.log(response.data);  
       this.setState({  
         ProductData: response.data  
@@ -57,58 +119,65 @@ export class Returnview extends Component {
   }  
 
 
-  render() { 
-    var deleteIcon =
-  (<IconButton onClick={console.log("delete")}>
-    <DeleteIcon color="secondary" />
-  </IconButton>
-  );
+render() { 
+  const deleteReturnitems =(order_id)=>{
+       axios.delete(`http://localhost:3001/deleteReturnitem/${order_id}`).then(()=>{
+      alert('Item deleted successfully')
+      });
+  }
 
-  const editIcon = (
-    <IconButton component={Link} to="/EditReturn">
-      <EditIcon color="primary" />
-    </IconButton>
-  );
- 
-    console.log(this.state.ProductData);  
-    return (  
- 
-      
-      <TableContainer component={Paper}> 
-      <div align = 'right'> <Link  to='/AddForm' className="Addbtn"><AddCircleIcon style={{marginTop:'5px'}}/> Add New </Link> <br/></div> 
+return (  
+       <TableContainer component={Paper}> 
+           <div align = 'right'>
+             <br/>
+             <Link  to='/AddForm' className="Addbtn"><AddCircleIcon style={{marginTop:'5px'}}/> Add New </Link> <br/>
+
+            </div> 
         <br/>
         <Table stickyHeader  aria-label="sticky table">  
          <TableHead >  
-            <TableRow>  
+            <StyledTableRow >  
               <StyledTableCell>Return Id</StyledTableCell>  
               <StyledTableCell align="center">Order ID</StyledTableCell>   
               <StyledTableCell align="center">Product ID</StyledTableCell>   
               <StyledTableCell align="center">Return Date</StyledTableCell>  
               <StyledTableCell align="center" >Action</StyledTableCell>   
-            </TableRow>  
+            </StyledTableRow >  
           </TableHead>  
           <TableBody>  
             {  
-              this.state.ProductData.map((p, index) => {  
-                return <TableRow key={index}>  
+              this.state.ProductData.map((record, index) => {  
+                return <StyledTableRow key={index}  >  
                   <TableCell component="th" scope="row">  
-                    {p.return_id}  
+                    {record.return_id}  
                   </TableCell>  
-                  <TableCell align="center">{p.order_id}</TableCell>  
-                  <TableCell align="center">{p.product_id}</TableCell>  
-                  <TableCell align="center">{p.return_date}</TableCell>  
-                  <TableCell align="center"> {deleteIcon} {editIcon}</TableCell>
-                </TableRow>  
+                  <TableCell align="center">{record.order_id}</TableCell>  
+                  <TableCell align="center">{record.product_id}</TableCell>  
+                  <TableCell align="center">{dateOnly(record.return_date)}</TableCell> 
+                  <TableCell align="center"> 
+                  <Link style={styles.viewbtn} to={location=> `/DpReturnItemInfoRoute/${record.order_id}`}> View </Link>
+                  <Link style={styles.updatebtn} to={location=> `/UpdateReturnDetailRoute/${record.order_id}`}> Update </Link>
+         {/*         <Link style={styles.deletebtn} onClick={()=>{deleteReturnitems(record.order_id)}}>Delete</Link> */} 
+
+                  </TableCell>
+                </StyledTableRow >  
+				
               })  
 
             }  
           </TableBody> 
           
         </Table>  
+        
 
      </TableContainer>  
+	 
+    
     );  
   }  
 }  
 
 export default Returnview; 
+
+
+
