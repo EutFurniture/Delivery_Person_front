@@ -1,7 +1,5 @@
 import React from 'react';
 import clsx from 'clsx';
-
-
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
@@ -10,17 +8,18 @@ import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import MenuIcon from '@material-ui/icons/Menu';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Grid from '@material-ui/core/Grid';
-import {Button} from 'react-bootstrap';
 import Divider from '@material-ui/core/Divider';
-
-
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import {Redirect} from "react-router-dom";
+import { useState } from 'react';
+import { Link } from "react-router-dom";
 
 import { DpListItems, Logout } from './dplistItems';
 import DeliveryView from './DeliveryView';
@@ -151,6 +150,26 @@ export default function Categories() {
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+  };
+  
+  const handleClose = () => {
+      setAnchorEl(null);
+  };
+  
+   // const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  
+  const[isAuth,setIsAuth]=useState(true);
+  
+  if(!isAuth){
+      return <Redirect to="" />
+  }
+
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -169,10 +188,22 @@ export default function Categories() {
             <b>DELIVERY PERSON</b>
           </Typography>
 
+          <IconButton color="inherit" fontSize="inherit">
+           <AccountCircleIcon   onClick={handleClick}/>
+  
+          </IconButton>
+          <Menu
+        id="simple-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+      
+        <MenuItem onClick={()=>setIsAuth(false)}>Logout</MenuItem>
+        <MenuItem component={Link} to="/Calender">Calendar</MenuItem>
+      </Menu>
 
-          <Paper variant="outlined">
-   
-</Paper>
         </Toolbar>
         
       </AppBar>
