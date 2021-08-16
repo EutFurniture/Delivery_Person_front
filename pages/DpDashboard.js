@@ -1,6 +1,5 @@
 import React from 'react';
 import clsx from 'clsx';
-
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
@@ -9,12 +8,15 @@ import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import  './DpDashboard.css';
+import {Redirect} from "react-router-dom";
+import { useState } from 'react';
+import { Link } from "react-router-dom"; 
 
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -151,14 +153,21 @@ export default function Dashboard() {
   };
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleClick = (event) => {
+const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
-  };
+};
 
-  const handleClose = () => {
+const handleClose = () => {
     setAnchorEl(null);
-  };
+};
 
+ // const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
+const[isAuth,setIsAuth]=useState(true);
+
+if(!isAuth){
+    return <Redirect to="" />
+}
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
 
@@ -181,9 +190,11 @@ export default function Dashboard() {
           </Typography>
 
 
-          <Paper variant="outlined">
-          <div>
-   
+          <IconButton color="inherit" fontSize="inherit">
+           <AccountCircleIcon   onClick={handleClick}/>
+  
+          </IconButton>
+
    <Menu
         id="simple-menu"
         anchorEl={anchorEl}
@@ -191,11 +202,12 @@ export default function Dashboard() {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem component={Link} to="/DpProfile">Profile</MenuItem>
+        <MenuItem onClick={()=>setIsAuth(false)}>Logout</MenuItem>
+        <MenuItem component={Link} to="/Calender">Calendar</MenuItem>
       </Menu>
-   </div>
-</Paper>
+   
+
         </Toolbar>
       </AppBar>
       <div style={styles.side}>
