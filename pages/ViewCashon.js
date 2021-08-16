@@ -7,12 +7,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';  
 import Paper from '@material-ui/core/Paper';  
 import axios from 'axios';  
-import { Link } from "react-router-dom"; 
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
-import { IconButton } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-
+import BootstrapSwitchButton from 'bootstrap-switch-button-react';
 
 
 const StyledTableCell = withStyles((theme) => ({
@@ -39,12 +35,16 @@ export class ViewCashon extends Component {
 
     super(props)  
     this.state = {  
-    ProductData: []  
+    ProductData: [
+      { label: 'true', value: true }
+
+    ]  
     }  
+   
   }  
 
   componentDidMount() {  
-    axios.get('http://localhost:3003/viewcashOnDelivery').then(response => {  
+    axios.get('http://localhost:3001/viewcashOnDelivery').then(response => {  
       console.log(response.data);  
       this.setState({  
         ProductData: response.data  
@@ -53,14 +53,7 @@ export class ViewCashon extends Component {
   }  
 
   render() { 
-    var deleteIcon =
-  (<IconButton onClick={console.log("delete")}>
-    <DeleteIcon color="secondary" />
-  </IconButton>
-  );
 
- 
- 
     console.log(this.state.ProductData);  
     return (  
       <TableContainer component={Paper}>  
@@ -86,7 +79,14 @@ export class ViewCashon extends Component {
                   <TableCell align="center">{p.total_price}</TableCell>  
                   <TableCell align="center">{p.advance_price}</TableCell>  
                   <TableCell align="center">{p.o_status}</TableCell> 
-                  <TableCell align="center"> {deleteIcon}</TableCell>
+                  <TableCell align="center"> 
+                  <BootstrapSwitchButton 
+                  onlabel='Got Payment'
+                  offlabel='Notify To Manager'
+                  checked={true}
+                  onstyle="outline-success" 
+                  offstyle="outline-danger"/>
+                  </TableCell>
                 </TableRow>  
               })  
 
