@@ -7,9 +7,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';  
 import Paper from '@material-ui/core/Paper';  
 import axios from 'axios';  
-
-import DeleteIcon from '@material-ui/icons/Delete';
-import { IconButton } from '@material-ui/core';
+import BootstrapSwitchButton from 'bootstrap-switch-button-react';
 import { withStyles } from '@material-ui/core/styles';
 
 
@@ -42,7 +40,7 @@ export class ViewConDelivery extends Component {
     }  
   }  
   componentDidMount() {  
-    axios.get('http://localhost:3003/viewConfirmDelivery').then(response => {  
+    axios.get('http://localhost:3001/viewConfirmDelivery').then(response => {  
       console.log(response.data);  
       this.setState({  
         ProductData: response.data  
@@ -53,12 +51,7 @@ export class ViewConDelivery extends Component {
 
 
   render() { 
-    var deleteIcon =
-  (<IconButton onClick={console.log("delete")}>
-    <DeleteIcon color="secondary" />
-  </IconButton>
-  );
-
+    
  
  
     console.log(this.state.ProductData);  
@@ -68,8 +61,8 @@ export class ViewConDelivery extends Component {
           <TableHead >  
             <TableRow>  
               
-              <StyledTableCell align="center">Delivery ID</StyledTableCell>  
-              <StyledTableCell align="center">Order ID</StyledTableCell>   
+              <StyledTableCell align="center">Order ID</StyledTableCell>  
+              <StyledTableCell align="center">Customer ID</StyledTableCell>   
               <StyledTableCell align="center" >Action</StyledTableCell>   
             </TableRow>  
           </TableHead>  
@@ -77,9 +70,18 @@ export class ViewConDelivery extends Component {
             {  
               this.state.ProductData.map((p, index) => {  
                 return <TableRow key={index}>  
-                  <TableCell align="center" component="th" scope="row">{p.delivery_id}</TableCell>  
-                  <TableCell align="center">{p.order_id}</TableCell>  
-                  <TableCell align="center"> {deleteIcon}</TableCell>
+                  <TableCell align="center" component="th" scope="row">{p.order_id}</TableCell>  
+                  <TableCell align="center">{p.customer_id}</TableCell>  
+                  <TableCell align="center">
+                  <BootstrapSwitchButton 
+                  style={{fontSize:'20px',width:'20px'}}
+                  onlabel=' Not Delivered'
+                  offlabel='Delivered'
+                  checked={true}
+                  onstyle="outline-success" 
+                  offstyle="outline-danger"/>
+
+                  </TableCell>
                 </TableRow>  
               })  
 
