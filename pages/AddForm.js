@@ -1,10 +1,8 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Axios from 'axios';
-
 import clsx from 'clsx';
 import { useState } from 'react';
-
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
@@ -21,9 +19,10 @@ import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-
-
-
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import {Redirect} from "react-router-dom";
 import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
 import { Row } from 'react-bootstrap';
@@ -171,7 +170,7 @@ export default function AddForm() {
 
 
     const addReturnItem = () => {
-      Axios.post('http://localhost:3003/create', {
+      Axios.post('http://localhost:3001/create', {
        
         product_id: product_id,
         order_id: order_id,
@@ -183,7 +182,24 @@ export default function AddForm() {
       });
     };
 
-    
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+ // const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
+  const[isAuth,setIsAuth]=useState(true);
+
+  if(!isAuth){
+    return <Redirect to="" />
+  }
+
 
 
   return (
@@ -203,7 +219,20 @@ export default function AddForm() {
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             <strong>DELIVERY PERSON</strong>
           </Typography>
-
+          <IconButton color="inherit" fontSize="inherit">
+           <AccountCircleIcon   onClick={handleClick}/>
+  
+          </IconButton>
+          <Menu
+        id="simple-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem component={Link} to="/Calender">Calendar</MenuItem>
+        <MenuItem onClick={()=>setIsAuth(false)}>Logout</MenuItem>
+      </Menu>
         </Toolbar>
       </AppBar>
       <div style={styles.side}>
@@ -248,18 +277,6 @@ export default function AddForm() {
                     <div className = "info">
   
 
-                    <Form.Group as={Row} controlId="formHorizontalProduct_id">
-                      <Form.Label column lg={2}>
-                        Product ID :
-                      </Form.Label>
-                      <Col sm={10}>
-                        <Form.Control type="text" placeholder="Product ID" 
-                        onChange={(event)=> {
-                          setProduct_id(event.target.value);
-                        }}
-                        />
-                      </Col>
-                    </Form.Group><br/>
 
                     <Form.Group as={Row} controlId="formHorizontalOrder_id">
                       <Form.Label column lg={2}>
@@ -275,6 +292,18 @@ export default function AddForm() {
                     </Form.Group><br/>
 
 
+                    <Form.Group as={Row} controlId="formHorizontalProduct_id">
+                      <Form.Label column lg={2}>
+                        Product ID :
+                      </Form.Label>
+                      <Col sm={10}>
+                        <Form.Control type="text" placeholder="Product ID" 
+                        onChange={(event)=> {
+                          setProduct_id(event.target.value);
+                        }}
+                        />
+                      </Col>
+                    </Form.Group><br/>
 
 
                     <Form.Group as={Row} controlId="formHorizontalReturn_date">
@@ -329,4 +358,5 @@ export default function AddForm() {
     </div>
   );
 }
+
 
