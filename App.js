@@ -1,10 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import BackImage from "./components/Login/Pages/BackImage";
+
+
+import SignUp from "./components/Login/Pages/SignUp";
 import LoginScreen from "./components/Login/Pages/LoginScreen";
 import ForgotPasswordScreen from "./components/Login/Pages/ForgotPasswordScreen";
 import ResetPasswordScreen from "./components/Login/Pages/ResetPasswordScreen";
+
+//ADMIN
 import ManageEmployee from "./components/admin/pages/ManageEmployee";
 import ManageUser from "./components/admin/pages/ManageUser";
 import ManagePayments from "./components/admin/pages/ManagePayments";
@@ -25,14 +29,21 @@ import GiftInfo from "./components/admin/pages/GiftInfo"
 import DashboardNew from "./components/admin/pages/DashboardNew";
 import Updateform from "./components/admin/pages/UpdateForm"
 import AddProduct from "./components/admin/pages/Addproduct";
+
+//DELIVERY MANAGER
+import Dashboard from './components/dManager/pages/Dashboard';
 import ManageDelivery from './components/dManager/pages/ManageDelivery';
 import ManageDelivers from './components/dManager/pages/ManageDelivers';
 import ManageReturnItems from './components/dManager/pages/ManageReturnItems';
 import AssignDelivers from './components/dManager/pages/AssignDelivers';
 import AddDelivers from './components/dManager/pages/AddDelivers';
-import EmployeePersonal from "./components/admin/pages/EmployeePersonal";
-import EmployeeInfo from "./components/admin/pages/EmployeeInfo";
+import ManageCashOnDelivery from './components/dManager/pages/ManageCashOnDelivery';
+import ManageSchedule from './components/dManager/pages/ManageSchedule';
+import ManagePrioritize from './components/dManager/pages/ManagePrioritize';
+import CashOnDeliveryInfo from './components/dManager/pages/CashOnDeliveryInfo';
+//import ManageReports from './components/dManager/pages/ManageReports';
 
+//SALES MANAGER
 import sDashboard from './components/sManager/pages/sDashboard';
 import Profile from './components/sManager/pages/profile';
 import Payments from './components/sManager/pages/payments';
@@ -41,41 +52,83 @@ import Customers from './components/sManager/pages/customers';
 import Orders from './components/sManager/pages/Orders';
 import DeliverySchedule from './components/sManager/pages/DeliverySchedule';
 
+//DELIVERY PERSON
 import DpDashboard from './components/dPerson/pages/DpDashboard';
 import AddReturnedItem from './components/dPerson/pages/AddReturnedItem';
 import ViewAvailableDelivery from './components/dPerson/pages/ViewAvailableDelivery';
 import ConfirmCashPay from './components/dPerson/pages/ConfirmCashPay';
 import ConfirmDelivery from './components/dPerson/pages/ConfirmDelivery';
 import AddForm from './components/dPerson/pages/AddForm';
-import UpdateReturn from './components/dPerson/pages/UpdateReturn';
-
+import UpdateReturnDetail from './components/dPerson/pages/UpdateReturnDetail';
+import DpProfile from './components/dPerson/pages/DpProfile';
 import Maps from './components/dPerson/pages/Maps';
+import DpReturnItemInfoRoute from './components/dPerson/pages/DpReturnItemInfoRoute';
+import DpReturnItemInfo from './components/dPerson/pages/DpReturnItemInfo';
+import UpdateReturnDetailRoute from './components/dPerson/pages/UpdateReturnDetailRoute';
+import AvailableDeliveryInfo from './components/dPerson/pages/AvailableDeliveryInfo';
+import AvailableDeliveryInfoRoute from './components/dPerson/pages/AvailableDeliveryInfoRoute';
+import DpProfileRoute from './components/dPerson/pages/DpProfileRoute';
+import Calender from './components/dPerson/pages/Calender';
+import UpdateConDeliveryRoute from './components/dPerson/pages/UpdateConDeliveryRoute';
+import UpdateConDelivery from './components/dPerson/pages/UpdateConDelivery';
 
-import Home from './components/customer/pages/Home';
-import Services from './components/customer/pages/Services';
-import Products from './components/customer/pages/Products';
-import SignUp from './components/customer/pages/SignUp';
-import EditReturn from './components/dPerson/pages/EditReturn';
 
 
-function App() {
+//CUSTOMER
+import Productl  from './components/customer/landing/Pproduct';
+import ProductListl from './components/customer/landing/Products/ProductList';
+import Detaill from './components/customer/landing/Products/Details';
+import Table from './components/customer/landing/Products/Table';
+import Chair from './components/customer/landing/Products/Chair';
+import Bed from './components/customer/landing/Products/Bed';
+import Sofa from './components/customer/landing/Products/Sofa';
+import Aboutl from './components/customer/landing/About';
+//import ProductList from './Products/category/ProductList';
+import Details from './components/customer/Products/Details';
+import Checkout from './components/customer/Products/checkout/Checkout';
+import Cart from './components/customer/Products/Cart/Cart';
+
+import New from './New'
+
+
+export default   function App() {
+
+  
+
   return (
     <>
     <Router>
     
       <Switch>
          
-        <Route path="/" exact component ={LoginScreen}/>
-        <Route path="/services" component={Services}/>
-        <Route path="/products" component={Products}/>
-        <Route path="/sign-up" component={SignUp}/>
-         
+  
+          <Route path='/Aboutl'  component={Aboutl}/>    
+          <Route path='/productl'  component={Productl}/>
+          <Route path='/detaill'  component={Detaill}/>
+          <Route path='/dining'  component={ProductListl}/>
+          <Route path='/chair'  component={Chair}/>
+          <Route path='/table'  component={Table}/>
+          <Route path='/sofa'  component={Sofa}/>
+          <Route path='/bed'  component={Bed}/>
+          <Route path="/detail" component={Details}/>
+          <Route path="/cart" component={Cart}/>
+          <Route path="/checkout" component={Checkout}/>
+
+
+          <Route path='/customer'  ><New /></Route>
           
-          <Route path='/ManageDelivery' component={ManageDelivery}/>
-          <Route path='/ManageDelivers' component={ManageDelivers}/>
-          <Route path='/AddDelivers' component={AddDelivers}/>
-          <Route path='/ManageReturnItems' component={ManageReturnItems}/>
-          <Route path='/AssignDelivers' component={AssignDelivers}/>  
+         
+          <Route path='/dManager/pages/Dashboard'  component={Dashboard}/>
+          <Route path='/dManager/pages/ManageDelivery' component={ManageDelivery}/>
+          <Route path='/dManager/pages/ManageDelivers' component={ManageDelivers}/>
+          <Route path='/dManager/pages/AddDelivers' component={AddDelivers}/>
+          <Route path='/dManager/pages/ManageReturnItems' component={ManageReturnItems}/>
+          <Route path='/dManager/pages/AssignDelivers' component={AssignDelivers}/>
+          <Route path='/dManager/pages/ManageCashOnDelivery' component={ManageCashOnDelivery}/>
+          <Route path='/dManager/pages/ManageSchedule' component={ManageSchedule}/>
+          <Route path='/dManager/pages/ManagePrioritize' component={ManagePrioritize}/>
+          <Route path='/CashOnDeliveryInfo' component={CashOnDeliveryInfo}/> 
+
         
           <Route path='/DpDashboard' component={DpDashboard}/>
           <Route path='/ViewAvailableDelivery' component={ViewAvailableDelivery}/>  
@@ -83,11 +136,19 @@ function App() {
           <Route path='/ConfirmCashPay' component={ConfirmCashPay}/>
           <Route path='/ConfirmDelivery' component={ConfirmDelivery}/>
           <Route path='/AddForm' component={AddForm}/>
-          <Route path='/EditReturn' component={EditReturn}/>
           <Route path='/Maps' component={Maps}/>
-          <Route path='/UpdateReturn' component={UpdateReturn}/>
-         
-          
+          <Route path='/UpdateReturnDetail' component={UpdateReturnDetail}/>
+          <Route path='/DpProfile' component={DpProfile}/>
+          <Route path='/DpProfileRoute' component={DpProfileRoute}/>
+          <Route path='/DpReturnItemInfo' component={DpReturnItemInfo}/>
+          <Route path='/DpReturnItemInfoRoute' component={DpReturnItemInfoRoute}/>
+          <Route path='/UpdateReturnDetailRoute' component={UpdateReturnDetailRoute}/>
+          <Route path='/AvailableDeliveryInfo' component={AvailableDeliveryInfo}/>
+          <Route path='/AvailableDeliveryInfoRoute' component={AvailableDeliveryInfoRoute}/>
+          <Route path='/Calender' component={Calender}/>
+          <Route path='/UpdateConDelivery' component={UpdateConDelivery}/>
+          <Route path='/UpdateConDeliveryRoute' component={UpdateConDeliveryRoute}/>
+
 
           <Route path='/sManager/pages/sDashboard' exact component={sDashboard}/>
           <Route path='/sManager/pages/Orders' component={Orders}/>
@@ -96,6 +157,7 @@ function App() {
           <Route path='/sManager/pages/promotions' component={Promotions}/>
           <Route path='/sManager/pages/customers' component={Customers}/>
           <Route path='/sManager/pages/DeliverySchedule' component={DeliverySchedule}/>
+
           
           <Route path='/DashboardNew' exact component={DashboardNew}/>
           <Route path='/ManageEmployee' component={ManageEmployee} />
@@ -114,20 +176,20 @@ function App() {
           <Route path='/ProductInfo' component={ProductInfo} />
           <Route path='/AddGift' component={AddGift} />
           <Route path='/EditGifts' component={EditGifts} />
+
+
+
+          
           <Route exact path="/forgotpassword" component={ForgotPasswordScreen} />
           <Route exact path="/passwordreset/:resetToken" component={ResetPasswordScreen}/> 
           <Route exact path="/UpdateEmployee" component={UpdateEmployee}/> 
           <Route exact path="/AddProduct" component={AddProduct}/>  
            
-         
-         
+          <Route exact path="/SignUp" component={SignUp} />
+          <Route exact path="/" component={LoginScreen} />
           <Route exact path="/forgotpassword" component={ForgotPasswordScreen} />
           <Route exact path="/passwordreset/:resetToken" component={ResetPasswordScreen} /> 
-          <Route exact path="/EmployeePersonal" component={EmployeePersonal} />
-          <Route exactpath="/EmployeeInfo"component={EmployeeInfo} />
-          <Route exact path="/UpdateEmployee" component={UpdateEmployee}/>
-
-
+         
 
       </Switch>
     </Router>
@@ -137,7 +199,7 @@ function App() {
     </>
   );
 }
+    
 
-export default App;
 
 
